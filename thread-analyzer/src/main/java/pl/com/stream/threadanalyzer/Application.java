@@ -10,8 +10,12 @@ import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletCon
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @EnableCircuitBreaker
 @EnableHystrix
@@ -21,7 +25,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		ConfigurableApplicationContext run = SpringApplication.run(
+				Application.class, args);
 	}
 
 	@Bean
@@ -30,6 +35,17 @@ public class Application {
 		tomcat.addAdditionalTomcatConnectors(createSslConnector());
 		tomcat.addAdditionalTomcatConnectors(createSslConnector2());
 		return tomcat;
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurerAdapter() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/app/**/*").allowedOrigins(
+						"http://localhost:3000");
+			}
+		};
 	}
 
 	private Connector createSslConnector() {
