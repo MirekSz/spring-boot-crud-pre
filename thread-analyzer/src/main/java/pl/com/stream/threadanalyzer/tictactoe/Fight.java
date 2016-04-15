@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 
 import pl.com.stream.threadanalyzer.tictactoe.Board.BoardResult;
 
@@ -39,14 +40,15 @@ public class Fight {
 		return playerA;
 	}
 
-	public BoardResult start() {
-		BoardResult win = BoardResult.DRAW;
+	public BoardResult start(SimpMessagingTemplate template) throws Exception {
+		BoardResult win = BoardResult.CONTINUE;
 		while (getMoves().size() < 100) {
 			Player Player = nextRound();
 			Move move = Player.getMove(board);
 			getMoves().add(move);
 
 			if (move.isValid(board)) {
+				Thread.sleep(1000);
 				win = board.move(move, Player);
 				if (win == BoardResult.WINNER) {
 					this.winner = Player;
@@ -57,6 +59,8 @@ public class Fight {
 			} else {
 				move.setComment("Invalid");
 			}
+			template.convertAndSend("/topic/move", move);
+
 		}
 		return win;
 	}

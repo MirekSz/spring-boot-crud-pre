@@ -9,6 +9,9 @@ public class Player {
 	private String host;
 	@JsonIgnore
 	private MoveReader moveReader;
+	private Integer wins = 0;
+	private Integer loses = 0;
+	private Integer draws = 0;
 
 	public Player() {
 		this.moveReader = new MoveReader(this);
@@ -59,5 +62,29 @@ public class Player {
 	@Override
 	public int hashCode() {
 		return this.name.hashCode();
+	}
+
+	public Integer getWins() {
+		return wins;
+	}
+
+	public void setWins(Integer wins) {
+		this.wins = wins;
+	}
+
+	public Integer getLoses() {
+		return loses;
+	}
+
+	public void setLoses(Integer loses) {
+		this.loses = loses;
+	}
+
+	public Integer getDraws() {
+		return draws;
+	}
+
+	public void setDraws(Integer draws) {
+		this.draws = draws;
 	}
 }
