@@ -9,6 +9,9 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
+import pl.com.stream.threadanalyzer.tictactoe.model.Fight;
+import pl.com.stream.threadanalyzer.tictactoe.model.Player;
+
 @Component
 public class TicTacToeStore {
 	private List<Player> players = new ArrayList();
@@ -41,9 +44,9 @@ public class TicTacToeStore {
 	@PostConstruct
 	public void init() {
 		addPlayer(new Player("Mirek", "localhost:8080"));
-		addPlayer(new Player("Mirek 2", "localhost:8080"));
-		addPlayer(new Player("Mirek 4", "localhost3:8080"));
-		addPlayer(new Player("Mirek 5", "localhos4t:8080"));
+		addPlayer(new Player("Maja", "localhost:8080"));
+		addPlayer(new Player("Kacper", "localhost:8080"));
+		addPlayer(new Player("Dominika", "localhost:8080"));
 
 	}
 }

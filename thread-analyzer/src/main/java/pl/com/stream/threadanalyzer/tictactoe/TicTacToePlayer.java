@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import pl.com.stream.threadanalyzer.tictactoe.model.Board;
+import pl.com.stream.threadanalyzer.tictactoe.model.Move;
+
 @RestController
 public class TicTacToePlayer {
 	@RequestMapping(value = "/getNextMove", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

@@ -8,7 +8,6 @@ import org.springframework.messaging.handler.invocation.HandlerMethodArgumentRes
 import org.springframework.messaging.handler.invocation.HandlerMethodReturnValueHandler;
 import org.springframework.messaging.simp.config.ChannelRegistration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
-import org.springframework.web.socket.config.WebSocketMessageBrokerStats;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
@@ -17,7 +16,6 @@ import org.springframework.web.socket.config.annotation.WebSocketTransportRegist
 @Configuration
 @EnableWebSocketMessageBroker
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
-	WebSocketMessageBrokerStats s;
 
 	@Override
 	public void configureMessageBroker(MessageBrokerRegistry config) {
@@ -27,18 +25,16 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
 	@Override
 	public void registerStompEndpoints(StompEndpointRegistry registry) {
-		registry.addEndpoint("/players", "/fight", "/move")
-				.setAllowedOrigins("*").withSockJS();
+		registry.addEndpoint("/players", "/fight", "/move", "/round").setAllowedOrigins("*")
+				.withSockJS();
 	}
 
 	@Override
-	public void configureClientInboundChannel(
-			ChannelRegistration channelRegistration) {
+	public void configureClientInboundChannel(ChannelRegistration channelRegistration) {
 	}
 
 	@Override
-	public void configureClientOutboundChannel(
-			ChannelRegistration channelRegistration) {
+	public void configureClientOutboundChannel(ChannelRegistration channelRegistration) {
 	}
 
 	@Override
@@ -48,8 +44,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 	}
 
 	@Override
-	public void addReturnValueHandlers(
-			List<HandlerMethodReturnValueHandler> arg0) {
+	public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> arg0) {
 		// TODO Auto-generated method stub
 
 	}

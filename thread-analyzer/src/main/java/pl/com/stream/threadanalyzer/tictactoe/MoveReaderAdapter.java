@@ -3,6 +3,10 @@ package pl.com.stream.threadanalyzer.tictactoe;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import pl.com.stream.threadanalyzer.tictactoe.model.Board;
+import pl.com.stream.threadanalyzer.tictactoe.model.Move;
+import pl.com.stream.threadanalyzer.tictactoe.model.Player;
+
 import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.netflix.hystrix.HystrixCommand;

@@ -1,5 +1,9 @@
 package pl.com.stream.threadanalyzer.tictactoe;
 
+import pl.com.stream.threadanalyzer.tictactoe.model.Board;
+import pl.com.stream.threadanalyzer.tictactoe.model.Move;
+import pl.com.stream.threadanalyzer.tictactoe.model.Player;
+
 public class MoveReader {
 
 	private Player player;

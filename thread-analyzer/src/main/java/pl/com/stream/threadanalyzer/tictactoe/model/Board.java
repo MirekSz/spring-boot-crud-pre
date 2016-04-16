@@ -1,4 +1,4 @@
-package pl.com.stream.threadanalyzer.tictactoe;
+package pl.com.stream.threadanalyzer.tictactoe.model;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;

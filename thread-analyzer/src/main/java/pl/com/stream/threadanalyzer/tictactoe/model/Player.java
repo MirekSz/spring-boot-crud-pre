@@ -1,6 +1,8 @@
-package pl.com.stream.threadanalyzer.tictactoe;
+package pl.com.stream.threadanalyzer.tictactoe.model;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
+import pl.com.stream.threadanalyzer.tictactoe.MoveReader;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
