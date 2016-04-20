@@ -3,6 +3,7 @@ package pl.com.stream.threadanalyzer.tictactoe;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import pl.com.stream.threadanalyzer.tictactoe.model.Player;
 import pl.com.stream.threadanalyzer.tictactoe.model.Round;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class TicTacToeController {
 	@Autowired
 	private Round round;
