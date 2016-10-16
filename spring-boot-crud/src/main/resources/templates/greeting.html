@@ -1,0 +1,16 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Getting Started: Serving Web Content</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body th:inline="text">
+	dawaj wow [[${customer.firstName}]]!
+	<ul th:if="${customer.firstName == 'Maja'}">
+		<li th:each="n : ${numbers}" th:style="${n%2==0?'color:red':'b'}">[[${n}]]</li>
+	</ul>
+	
+	<div th:include="partials/field :: copy"></div>
+	<div th:include="partials/field :: field" th:with="label=#{'customer.firstName'},value='jan'"></div>
+</body>
+</html>

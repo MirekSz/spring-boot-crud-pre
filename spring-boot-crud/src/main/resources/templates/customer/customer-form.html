@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="layout :: header"></head>
+<body th:inline="text">
+	<div th:include="layout :: menu"></div>
+	<div class="container">
+		<form action="#" th:action="@{/customers/add}" th:object="${customer}"
+			method="post">
+			<ul th:if="${#fields.hasErrors('*')}">
+				<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input
+					is incorrect</li>
+			</ul>
+			<input type="text" th:field="*{firstName}" /> <input type="text"
+				th:field="*{lastName}" /> <input type="text" th:field="*{age}" />
+			<button type="submit">Send</button>
+		</form>
+	</div>
+</body>
+</html>
