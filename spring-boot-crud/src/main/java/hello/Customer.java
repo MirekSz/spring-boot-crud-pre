@@ -3,9 +3,11 @@ package hello;
 import javax.validation.constraints.NotNull;
 
 public class Customer {
+	@NotNull
 	private String firstName;
 	@NotNull
 	private String lastName;
+	@NotNull
 	private Integer age;
 	private Long id;
 

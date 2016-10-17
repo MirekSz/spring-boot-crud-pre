@@ -1,7 +1,15 @@
-<div th:fragment="field" xmlns:th="http://www.thymeleaf.org" >
-<label th:text="${label}"></label>
-<input th:value="${value}"/>
+<div th:fragment="field" xmlns:th="http://www.thymeleaf.org">
+	<div class="form-group"
+		th:classappend="${#fields.hasErrors('${__${label}__}')}? 'has-error'">
+		<label th:text="#{__${label}__}" class="control-label"></label>
+		<div class="controls">
+			<input th:value="${value}" class="form-control"
+				th:field="*{__${label.split('\.')[1]}__}" th:errorclass="error" /> <span
+				class="help-inline" th:if="${#fields.hasErrors('${__${label}__}')}"
+				th:errors="*{__${label.split('\.')[1]}__}"></span>
+		</div>
+	</div>
 </div>
 <footer th:fragment="copy" xmlns:th="http://www.thymeleaf.org">
-  &copy; 2011 The Good Thymes Virtual Grocery
-</footer>
+	&copy; 2011 The Good Thymes Virtual Grocery </footer>
+

@@ -3,17 +3,28 @@
 <head th:include="layout :: header"></head>
 <body th:inline="text">
 	<div th:include="layout :: menu"></div>
+
 	<div class="container">
-		<form action="#" th:action="@{/customers/add}" th:object="${customer}"
-			method="post">
-			<ul th:if="${#fields.hasErrors('*')}">
-				<li th:each="err : ${#fields.errors('*')}" th:text="${err}">Input
-					is incorrect</li>
-			</ul>
-			<input type="text" th:field="*{firstName}" /> <input type="text"
-				th:field="*{lastName}" /> <input type="text" th:field="*{age}" />
-			<button type="submit">Send</button>
-		</form>
+		<div class="panel panel-default">
+		<div class="panel-heading">
+		Customer form
+		</div>
+			<div class="panel-body">
+				<form action="#" th:action="@{/customers/add}"
+					th:object="${customer}" method="post" class="form ">
+					<div th:include="partials/field :: field"
+						th:with="label='customer.firstName',value=*{firstName}"></div>
+
+					<div th:include="partials/field :: field"
+						th:with="label='customer.lastName',value=*{lastName}"></div>
+
+					<div th:include="partials/field :: field"
+						th:with="label='customer.age',value=*{age}"></div>
+
+					<button type="submit" class="btn btn-default pull-right">Save</button>
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
 </html>

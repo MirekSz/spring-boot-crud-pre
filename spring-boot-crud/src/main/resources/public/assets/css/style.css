@@ -20,7 +20,10 @@
 		margin: 0;
 		padding: 0px;
 	} 
-
+	 .help-inline {
+    display: block;
+    float: none;
+  }
 body { 
 	background: #ffffff; 
 	margin: 0; 
@@ -335,8 +338,8 @@ a:focus {
 
 /* Footer */
 #footerwrap {
-	padding-top: 60px;
-	padding-bottom: 60px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	margin-top: 100px;
 	background: #384452;
 }
