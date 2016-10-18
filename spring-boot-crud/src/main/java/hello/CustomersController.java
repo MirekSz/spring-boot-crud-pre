@@ -1,11 +1,15 @@
 package hello;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
-import javax.validation.Valid;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +41,7 @@ public class CustomersController {
 	@RequestMapping
 	public String list(Model model) {
 		model.addAttribute("customers", customers.values());
+		model.addAttribute("demo", new Date());
 		return "customer/customer-list";
 	}
 
@@ -48,15 +53,34 @@ public class CustomersController {
 		return "customer/customer-form";
 	}
 
+	@Autowired
+	Validator validator;
+
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(@ModelAttribute @Valid Customer customer, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes) {
+	public String add(@ModelAttribute Customer customer,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+		handle(customer, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return "customer/customer-form";
 		}
+
 		customer.setId(customers.size() + 1L);
 		customers.put(customer.getId(), customer);
 		redirectAttributes.addFlashAttribute("added", true);
 		return "redirect:/customers";
+	}
+
+	public void handle(Customer customer, BindingResult bindingResult) {
+		Set<ConstraintViolation<Customer>> validate = validator
+				.validate(customer);
+
+		if (validate.size() > 0) {
+			for (ConstraintViolation<Customer> constraintViolation : validate) {
+				bindingResult.rejectValue(constraintViolation.getPropertyPath()
+						.toString(), "NotNull");
+
+			}
+		}
+
 	}
 }

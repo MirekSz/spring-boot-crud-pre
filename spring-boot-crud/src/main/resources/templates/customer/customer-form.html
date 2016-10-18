@@ -9,11 +9,15 @@
 			<div class="panel-body">
 				<form action="#" th:action="@{/customers/add}"
 					th:object="${customer}" method="post" class="form ">
-					<div th:include="partials/field :: field" th:with="key='customer.firstName'"></div>
 
-					<div th:include="partials/field :: field" th:with="key='customer.lastName'"></div>
+					<div th:include="partials/field :: field"
+						th:with="key='customer.firstName'"></div>
 
-					<div th:include="partials/field :: field" th:with="key='customer.age'"></div>
+					<div th:include="partials/field :: field"
+						th:with="key='customer.lastName'"></div>
+
+					<div th:include="partials/field :: field"
+						th:with="key='customer.age'"></div>
 
 					<button type="submit" class="btn btn-default pull-right">Save</button>
 				</form>
