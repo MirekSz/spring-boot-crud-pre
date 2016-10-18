@@ -1,12 +1,12 @@
 <div th:fragment="field" xmlns:th="http://www.thymeleaf.org">
 	<div class="form-group"
-		th:classappend="${#fields.hasErrors('${__${label}__}')}? 'has-error'">
-		<label th:text="#{__${label}__}" class="control-label"></label>
+		th:classappend="${#fields.hasErrors('${__${key}__}')}? 'has-error'">
+		<label th:text="#{__${key}__}" class="control-label"></label>
 		<div class="controls">
-			<input th:value="${value}" class="form-control"
-				th:field="*{__${label.split('\.')[1]}__}" th:errorclass="error" /> <span
-				class="help-inline" th:if="${#fields.hasErrors('${__${label}__}')}"
-				th:errors="*{__${label.split('\.')[1]}__}"></span>
+			<input th:value="${__${key}__}" class="form-control"
+				th:field="*{__${key.split('\.')[1]}__}" th:errorclass="error" /> <span
+				class="help-inline" th:if="${#fields.hasErrors('${__${key}__}')}"
+				th:errors="*{__${key.split('\.')[1]}__}"></span>
 		</div>
 	</div>
 </div>
