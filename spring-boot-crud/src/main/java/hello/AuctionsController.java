@@ -38,8 +38,10 @@ public class AuctionsController {
 
 	@PostConstruct
 	public void init() {
-		auctions.put(1L, new Auction(1L, "Dysk SSD", "Dysk SSD", BigDecimal.TEN));
-		auctions.put(2L, new Auction(2L, "DDR 16GB", "DDR 16GB", BigDecimal.TEN));
+		auctions.put(1L,
+				new Auction(1L, "Dysk SSD", "Dysk SSD", BigDecimal.TEN));
+		auctions.put(2L,
+				new Auction(2L, "DDR 16GB", "DDR 16GB", BigDecimal.TEN));
 	}
 
 	@RequestMapping
@@ -60,15 +62,19 @@ public class AuctionsController {
 	Validator validator;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(@ModelAttribute Auction auction, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile uploadfile) throws Exception {
-		String originalFilename = uploadfile.getOriginalFilename();
-		File file = new File("");
-		String absolutePath = file.getAbsolutePath();
-		String savePath = absolutePath + File.separator + "src" + File.separator + "main" + File.separator
-				+ "resources" + File.separator + "public" + File.separator + "phones";
-		FileUtils.copyInputStreamToFile(uploadfile.getInputStream(), new File(savePath + File.separator
-				+ originalFilename));
+	public String add(@ModelAttribute Auction auction,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes,
+			@RequestParam("file") MultipartFile uploadfile) throws Exception {
+		if (uploadfile != null && !uploadfile.isEmpty()) {
+			String originalFilename = uploadfile.getOriginalFilename();
+			File file = new File("");
+			String absolutePath = file.getAbsolutePath();
+			String savePath = absolutePath + File.separator + "src"
+					+ File.separator + "main" + File.separator + "resources"
+					+ File.separator + "public" + File.separator + "phones";
+			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(),
+					new File(savePath + File.separator + originalFilename));
+		}
 		handle(auction, bindingResult);
 		if (bindingResult.hasErrors()) {
 			return "auction/auction-form";
@@ -81,11 +87,13 @@ public class AuctionsController {
 	}
 
 	public void handle(Auction auction, BindingResult bindingResult) {
-		Set<ConstraintViolation<Auction>> validate = validator.validate(auction);
-
+		Set<ConstraintViolation<Auction>> validate = validator
+				.validate(auction);
+		bindingResult.reject("zle", "Jest zle");
 		if (validate.size() > 0) {
 			for (ConstraintViolation<Auction> constraintViolation : validate) {
-				bindingResult.rejectValue(constraintViolation.getPropertyPath().toString(), "NotNull");
+				bindingResult.rejectValue(constraintViolation.getPropertyPath()
+						.toString(), "NotNull");
 
 			}
 		}
