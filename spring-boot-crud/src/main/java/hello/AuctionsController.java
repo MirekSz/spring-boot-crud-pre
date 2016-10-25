@@ -14,6 +14,7 @@ import javax.validation.Validator;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -38,13 +39,12 @@ public class AuctionsController {
 
 	@PostConstruct
 	public void init() {
-		auctions.put(1L,
-				new Auction(1L, "Dysk SSD", "Dysk SSD", BigDecimal.TEN));
-		auctions.put(2L,
-				new Auction(2L, "DDR 16GB", "DDR 16GB", BigDecimal.TEN));
+		auctions.put(1L, new Auction(1L, "Dysk SSD", "Dysk SSD", BigDecimal.TEN));
+		auctions.put(2L, new Auction(2L, "DDR 16GB", "DDR 16GB", BigDecimal.TEN));
 	}
 
 	@RequestMapping
+	@PreAuthorize("@logger.go(#this)")
 	public String list(Model model) {
 		model.addAttribute("auctions", auctions.values());
 		model.addAttribute("demo", new Date());
@@ -62,18 +62,16 @@ public class AuctionsController {
 	Validator validator;
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(@ModelAttribute Auction auction,
-			BindingResult bindingResult, RedirectAttributes redirectAttributes,
-			@RequestParam("file") MultipartFile uploadfile) throws Exception {
+	public String add(@ModelAttribute Auction auction, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes, @RequestParam("file") MultipartFile uploadfile) throws Exception {
 		if (uploadfile != null && !uploadfile.isEmpty()) {
 			String originalFilename = uploadfile.getOriginalFilename();
 			File file = new File("");
 			String absolutePath = file.getAbsolutePath();
-			String savePath = absolutePath + File.separator + "src"
-					+ File.separator + "main" + File.separator + "resources"
-					+ File.separator + "public" + File.separator + "phones";
-			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(),
-					new File(savePath + File.separator + originalFilename));
+			String savePath = absolutePath + File.separator + "src" + File.separator + "main" + File.separator
+					+ "resources" + File.separator + "public" + File.separator + "phones";
+			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(), new File(savePath + File.separator
+					+ originalFilename));
 		}
 		handle(auction, bindingResult);
 		if (bindingResult.hasErrors()) {
@@ -87,13 +85,11 @@ public class AuctionsController {
 	}
 
 	public void handle(Auction auction, BindingResult bindingResult) {
-		Set<ConstraintViolation<Auction>> validate = validator
-				.validate(auction);
+		Set<ConstraintViolation<Auction>> validate = validator.validate(auction);
 		bindingResult.reject("zle", "Jest zle");
 		if (validate.size() > 0) {
 			for (ConstraintViolation<Auction> constraintViolation : validate) {
-				bindingResult.rejectValue(constraintViolation.getPropertyPath()
-						.toString(), "NotNull");
+				bindingResult.rejectValue(constraintViolation.getPropertyPath().toString(), "NotNull");
 
 			}
 		}
