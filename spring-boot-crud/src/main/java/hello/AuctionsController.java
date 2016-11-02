@@ -86,7 +86,7 @@ public class AuctionsController {
 
 	public void handle(Auction auction, BindingResult bindingResult) {
 		Set<ConstraintViolation<Auction>> validate = validator.validate(auction);
-		bindingResult.reject("zle", "Jest zle");
+		// bindingResult.reject("zle", "Jest zle");
 		if (validate.size() > 0) {
 			for (ConstraintViolation<Auction> constraintViolation : validate) {
 				bindingResult.rejectValue(constraintViolation.getPropertyPath().toString(), "NotNull");
