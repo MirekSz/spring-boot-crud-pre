@@ -54,6 +54,7 @@ public class AuctionsController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String add(Model model) {
 		Auction auction = new Auction();
+		auction.setExpireDate(new Date());
 		model.addAttribute("auction", auction);
 		return "auction/auction-form";
 	}
@@ -70,8 +71,8 @@ public class AuctionsController {
 			String absolutePath = file.getAbsolutePath();
 			String savePath = absolutePath + File.separator + "src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "public" + File.separator + "phones";
-			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(), new File(savePath + File.separator
-					+ originalFilename));
+			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(),
+					new File(savePath + File.separator + originalFilename));
 		}
 		handle(auction, bindingResult);
 		if (bindingResult.hasErrors()) {

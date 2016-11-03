@@ -1,10 +1,13 @@
 package hello;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -31,12 +34,31 @@ public class StaticResourceConfiguration extends WebMvcConfigurerAdapter {
 	@Override
 	public void addFormatters(FormatterRegistry formatterRegistry) {
 		formatterRegistry.addConverter(new Converter<Date, String>() {
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss");
 
 			@Override
 			public String convert(Date arg0) {
+				// import java.time.format.DateTimeFormatter;
+				// myDate.format(DateTimeFormatter.ofPattern("dd-MMM-YYYY",new
+				// Locale("ar")))
+				Locale locale = LocaleContextHolder.getLocale();
+				SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", locale);
 				return simpleDateFormat.format(arg0);
 			}
+
+		});
+
+		formatterRegistry.addConverter(new Converter<String, Date>() {
+			@Override
+			public Date convert(String arg0) {
+				try {
+					Locale locale = LocaleContextHolder.getLocale();
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd MMMM yyyy HH:mm:ss", locale);
+					return simpleDateFormat.parse(arg0);
+				} catch (ParseException e) {
+					throw new RuntimeException(e);
+				}
+			}
+
 		});
 	}
 

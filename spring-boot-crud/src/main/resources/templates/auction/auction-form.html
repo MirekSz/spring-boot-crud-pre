@@ -19,7 +19,11 @@
 							</ul>
 						</div>
 					</div>
-
+				<input th:field="*{expireDate}" />
+				
+				<ul>
+  <li th:each="err : ${#fields.errors('expireDate')}" th:text="${err}" />
+</ul>
 					<div th:include="partials/field :: field"
 						th:with="key='auction.name'"></div>
 

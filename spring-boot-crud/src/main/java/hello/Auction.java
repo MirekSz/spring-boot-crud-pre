@@ -1,6 +1,7 @@
 package hello;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
@@ -14,6 +15,7 @@ public class Auction {
 	private BigDecimal minPrice;
 	private BigDecimal currentPrice;
 	private String currentWiner;
+	private Date expireDate;
 
 	public Auction(Long id, String name, String description, BigDecimal minPrice) {
 		this.id = id;
@@ -71,6 +73,14 @@ public class Auction {
 
 	public void setCurrentWiner(String currentWiner) {
 		this.currentWiner = currentWiner;
+	}
+
+	public Date getExpireDate() {
+		return expireDate;
+	}
+
+	public void setExpireDate(Date expireDate) {
+		this.expireDate = expireDate;
 	}
 
 }
