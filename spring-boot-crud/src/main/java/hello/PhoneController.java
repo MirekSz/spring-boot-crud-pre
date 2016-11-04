@@ -1,6 +1,5 @@
 package hello;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -15,16 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class PhoneController {
-	@Value("classpath:/public/phones")
-	Resource resource;
+	@Value("classpath:/public/phones/*.jpg")
+	Resource[] resources;
 	List<String> images = new ArrayList<String>();
 
 	@PostConstruct
 	public void init() throws Exception {
-		File file = resource.getFile();
-		File[] listFiles = file.listFiles();
-		for (File file2 : listFiles) {
-			images.add(file2.getName());
+		for (Resource file2 : resources) {
+			images.add(file2.getFilename());
 		}
 		System.out.println(images);
 	}
