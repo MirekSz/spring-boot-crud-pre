@@ -3,9 +3,16 @@ package hello;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+@Entity
 public class Auction {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@NotNull
 	private String name;
@@ -16,6 +23,7 @@ public class Auction {
 	private BigDecimal currentPrice;
 	private String currentWiner;
 	private Date expireDate;
+	private String owner;
 
 	public Auction(Long id, String name, String description, BigDecimal minPrice) {
 		this.id = id;
@@ -81,6 +89,14 @@ public class Auction {
 
 	public void setExpireDate(Date expireDate) {
 		this.expireDate = expireDate;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
 	}
 
 }

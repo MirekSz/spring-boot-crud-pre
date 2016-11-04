@@ -3,8 +3,6 @@ package hello;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -30,7 +28,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/auctions")
 public class AuctionsController {
-	Map<Long, Auction> auctions = new HashMap<Long, Auction>();
+	@Autowired
+	AuctionRepo repo;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -39,14 +38,16 @@ public class AuctionsController {
 
 	@PostConstruct
 	public void init() {
-		auctions.put(1L, new Auction(1L, "Dysk SSD", "Dysk SSD", BigDecimal.TEN));
-		auctions.put(2L, new Auction(2L, "DDR 16GB", "DDR 16GB", BigDecimal.TEN));
+		repo.save(new Auction(1L, "Dysk SSD", "Dysk SSD", BigDecimal.TEN));
+		repo.save(new Auction(2L, "DDR 16GB", "DDR 16GB", BigDecimal.TEN));
 	}
 
 	@RequestMapping
-	@PreAuthorize("@logger.go(#this)")
+	@PreAuthorize("@logger.go(authentication)")
 	public String list(Model model) {
-		model.addAttribute("auctions", auctions.values());
+		repo.getAllForCurrentUser();
+		Auction findOne = repo.findOne(repo.findAll().get(0).getId());
+		model.addAttribute("auctions", repo.findAll());
 		model.addAttribute("demo", new Date());
 		return "auction/auction-list";
 	}
@@ -79,8 +80,7 @@ public class AuctionsController {
 			return "auction/auction-form";
 		}
 
-		auction.setId(auctions.size() + 1L);
-		auctions.put(auction.getId(), auction);
+		repo.save(auction);
 		redirectAttributes.addFlashAttribute("added", true);
 		return "redirect:/auctions";
 	}
