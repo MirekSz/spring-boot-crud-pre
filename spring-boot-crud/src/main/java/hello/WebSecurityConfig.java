@@ -3,8 +3,10 @@ package hello;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.EventListener;
 import org.springframework.data.repository.query.spi.EvaluationContextExtension;
 import org.springframework.data.repository.query.spi.EvaluationContextExtensionSupport;
+import org.springframework.security.access.event.AuthorizationFailureEvent;
 import org.springframework.security.access.expression.SecurityExpressionRoot;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -23,13 +25,17 @@ import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	@EventListener
+	public void handle(AuthorizationFailureEvent envent) {
+		System.out.println(envent);
+	}
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		// http.addFilterBefore(filter,
 		// UsernamePasswordAuthenticationFilter.class);
 		http.authorizeRequests().antMatchers("/assets/**").permitAll().anyRequest().authenticated().and().formLogin()
-				.and().csrf().csrfTokenRepository(csrfTokenRepository());
+				.and().rememberMe().and().csrf().csrfTokenRepository(csrfTokenRepository());
 	}
 
 	private CsrfTokenRepository csrfTokenRepository() {
