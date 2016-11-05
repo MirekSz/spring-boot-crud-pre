@@ -2,8 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta name="_csrf" th:content="${_csrf.token}"/>
-	<!-- default header name is X-CSRF-TOKEN -->
 	<meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+	<meta name="ctx" th:content="${#httpServletRequest.getContextPath()}" />
 <title>Auctions</title>
 <div th:replace="layout/fragments :: header"></div>
 </head>
