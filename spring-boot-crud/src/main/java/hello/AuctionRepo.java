@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AuctionRepo extends JpaRepository<Auction, Long> {
-	@Query("FROM Auction a WHERE a.owner = ?#{principal.getUsername()}")
+	@Query("FROM Auction a WHERE a.creator = ?#{principal.getUsername()} OR a.creator = ?#{@company.getCompany()}")
 	List<Auction> getAllForCurrentUser();
 
 	@Override

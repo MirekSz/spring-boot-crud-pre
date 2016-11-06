@@ -3,6 +3,7 @@ package hello;
 import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.annotation.PostConstruct;
@@ -45,7 +46,8 @@ public class AuctionsController {
 	@RequestMapping
 	@PreAuthorize("@logger.go(authentication)")
 	public String list(Model model) {
-		repo.getAllForCurrentUser();
+		List<Auction> allForCurrentUser = repo.getAllForCurrentUser();
+		System.out.println("allForCurrentUser " + allForCurrentUser.size());
 		Auction findOne = repo.findOne(repo.findAll().get(0).getId());
 		model.addAttribute("auctions", repo.findAll());
 		model.addAttribute("demo", new Date());
@@ -72,8 +74,8 @@ public class AuctionsController {
 			String absolutePath = file.getAbsolutePath();
 			String savePath = absolutePath + File.separator + "src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "public" + File.separator + "phones";
-			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(),
-					new File(savePath + File.separator + originalFilename));
+			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(), new File(savePath + File.separator
+					+ originalFilename));
 		}
 		handle(auction, bindingResult);
 		if (bindingResult.hasErrors()) {

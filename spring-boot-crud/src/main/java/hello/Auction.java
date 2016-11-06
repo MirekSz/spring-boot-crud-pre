@@ -4,12 +4,20 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 public class Auction {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -24,6 +32,15 @@ public class Auction {
 	private String currentWiner;
 	private Date expireDate;
 	private String owner;
+	@CreatedDate
+	private Date createdDate;
+	@LastModifiedDate
+	private Date lastModifiedDate;
+
+	@CreatedBy
+	private String creator;
+	@LastModifiedBy
+	private String modifier;
 
 	public Auction(Long id, String name, String description, BigDecimal minPrice) {
 		this.id = id;
@@ -97,6 +114,30 @@ public class Auction {
 
 	public void setOwner(String owner) {
 		this.owner = owner;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	public String getModifier() {
+		return modifier;
+	}
+
+	public void setModifier(String modifier) {
+		this.modifier = modifier;
 	}
 
 }

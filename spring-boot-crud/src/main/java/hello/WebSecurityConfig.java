@@ -36,6 +36,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// UsernamePasswordAuthenticationFilter.class);
 		http.authorizeRequests().antMatchers("/assets/**").permitAll().anyRequest().authenticated().and().formLogin()
 				.and().rememberMe().and().csrf().csrfTokenRepository(csrfTokenRepository());
+
+		// AccessDeniedHandlerImpl deniedhandler = new
+		// AccessDeniedHandlerImpl();
+		// deniedhandler.setErrorPage("/accessdenied");
+		// http.authorizeRequests()
+		// .antMatchers("/welcome", "/api/ping", "/api/cookie", "/signup",
+		// "loginAjax", "/about", "/register", "/currentUser", "/", "/welcome")
+		// .permitAll().antMatchers("/api/admin/**").hasRole("ADMIN")
+		// .antMatchers("/api/appContext").hasRole("ADMIN")
+		// .antMatchers("/role/**").hasRole("ADMIN")
+		// .antMatchers("/role/*").hasRole("ADMIN")
+		// /* .antMatchers("/products/**").hasAnyRole("USER")
+		// .antMatchers("/products/*").hasAnyRole("USER")*/
+		// .antMatchers("/api/user/**").hasRole("USER")
+		// .antMatchers("/currentUser").hasRole("USER")
+		// .antMatchers("/api/business**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_BUSINESS')").anyRequest().authenticated();
+		// http.headers().disable();
+		// http.csrf().disable()
+		// .formLogin().loginPage("/login").successHandler(authSuccessHandlerImpl).failureHandler(authFailureHandlerImpl).failureUrl("/login?error=true").defaultSuccessUrl("/").permitAll()
+		// .and()
+		// .logout().logoutUrl("/logout").logoutSuccessUrl("/welcome").invalidateHttpSession(true).deleteCookies("JSESSIONID").permitAll()
+		// .and().exceptionHandling().accessDeniedHandler(deniedhandler);
+		// //@formatter:on
 	}
 
 	private CsrfTokenRepository csrfTokenRepository() {
@@ -43,6 +66,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// repository.setHeaderName("sec-token");
 		return repository;
 	}
+
+	// @Autowired
+	// public void configureGlobal(UserDetailsService userDetailsService,
+	// AuthenticationManagerBuilder auth,
+	// PasswordEncoder passwordEncoder) throws Exception {
+	// auth.userDetailsService(userDetailsService);
+	// }
 
 	@Autowired
 	public void configureGlobal(final AuthenticationManagerBuilder auth) throws Exception {
@@ -76,4 +106,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			};
 		}
 	}
+
 }
