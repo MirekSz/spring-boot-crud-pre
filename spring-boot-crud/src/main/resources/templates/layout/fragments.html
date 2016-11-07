@@ -34,9 +34,9 @@ NProgress.configure({ easing: 'ease', speed: 1000 });
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/">HOME</a></li>
-					<li><a href="about.html">ABOUT</a></li>
-					<li><a href="contact.html">CONTACT</a></li>
+					<li class="active"><a th:href="@{/}">HOME</a></li>
+					<li><a th:href="@{/about}">ABOUT</a></li>
+					<li><a th:href="@{/contact}">CONTACT</a></li>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
