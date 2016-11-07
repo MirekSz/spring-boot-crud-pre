@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.core.annotation.Order;
 import org.springframework.data.repository.query.spi.EvaluationContextExtension;
 import org.springframework.data.repository.query.spi.EvaluationContextExtensionSupport;
 import org.springframework.security.access.event.AuthorizationFailureEvent;
@@ -21,10 +22,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 import org.springframework.security.web.csrf.HttpSessionCsrfTokenRepository;
 
+@Order(100)
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
 	@EventListener
 	public void handle(AuthorizationFailureEvent envent) {
 		System.out.println(envent);
@@ -36,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// UsernamePasswordAuthenticationFilter.class);
 		http.authorizeRequests().antMatchers("/assets/**").permitAll().anyRequest().authenticated().and().formLogin()
 				.and().rememberMe().and().csrf().csrfTokenRepository(csrfTokenRepository());
+		http.headers().frameOptions().disable();
 
 		// AccessDeniedHandlerImpl deniedhandler = new
 		// AccessDeniedHandlerImpl();
@@ -51,7 +55,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// .antMatchers("/products/*").hasAnyRole("USER")*/
 		// .antMatchers("/api/user/**").hasRole("USER")
 		// .antMatchers("/currentUser").hasRole("USER")
-		// .antMatchers("/api/business**").access("hasRole('ROLE_ADMIN') and hasRole('ROLE_BUSINESS')").anyRequest().authenticated();
+		// .antMatchers("/api/business**").access("hasRole('ROLE_ADMIN') and
+		// hasRole('ROLE_BUSINESS')").anyRequest().authenticated();
 		// http.headers().disable();
 		// http.csrf().disable()
 		// .formLogin().loginPage("/login").successHandler(authSuccessHandlerImpl).failureHandler(authFailureHandlerImpl).failureUrl("/login?error=true").defaultSuccessUrl("/").permitAll()
