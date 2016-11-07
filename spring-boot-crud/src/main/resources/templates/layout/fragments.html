@@ -4,8 +4,20 @@
 <link th:href="@{/assets/css/bootstrap.css}" rel="stylesheet" />
 <link th:href="@{/assets/css/style.css}" rel="stylesheet" />
 <link th:href="@{/assets/css/font-awesome.min.css}" rel="stylesheet" />
+<link th:href="@{/assets/css/nprogress.css}" rel="stylesheet" />
 <script type="text/javascript" th:src="@{/assets/js/jquery-2.2.4.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/bootstrap.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/js/nprogress.js}"></script>
 <script type="text/javascript" th:src="@{/assets/auctions.js}"></script>
+<script>
+NProgress.configure({ easing: 'ease', speed: 1000 });
+    $(document).ajaxStart(function () {
+        NProgress.start();
+    });
+    $(document).ajaxStop(function () {
+        NProgress.done();
+    });
+</script>
 </head>
 <div th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
 	<!-- Fixed navbar -->

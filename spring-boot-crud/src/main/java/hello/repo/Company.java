@@ -1,4 +1,4 @@
-package hello;
+package hello.repo;
 
 import org.springframework.stereotype.Component;
 
