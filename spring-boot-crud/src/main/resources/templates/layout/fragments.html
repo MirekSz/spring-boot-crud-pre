@@ -10,13 +10,16 @@
 <script type="text/javascript" th:src="@{/assets/js/nprogress.js}"></script>
 <script type="text/javascript" th:src="@{/assets/auctions.js}"></script>
 <script>
-NProgress.configure({ easing: 'ease', speed: 1000 });
-    $(document).ajaxStart(function () {
-        NProgress.start();
-    });
-    $(document).ajaxStop(function () {
-        NProgress.done();
-    });
+	NProgress.configure({
+		easing : 'ease',
+		speed : 1000
+	});
+	$(document).ajaxStart(function() {
+		NProgress.start();
+	});
+	$(document).ajaxStop(function() {
+		NProgress.done();
+	});
 </script>
 </head>
 <div th:fragment="menu" xmlns:th="http://www.thymeleaf.org">
@@ -30,14 +33,19 @@ NProgress.configure({ easing: 'ease', speed: 1000 });
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-		<!--		<a class="navbar-brand" href="/"><i><span style="font-size:24px"><span style="color:red">ALT</span>KOM</span> training app</i></a>-->
+				<!--		<a class="navbar-brand" href="/"><i><span style="font-size:24px"><span style="color:red">ALT</span>KOM</span> training app</i></a>-->
 			</div>
 			<div class="navbar-collapse collapse navbar-right">
 				<ul class="nav navbar-nav">
-					<li class="active"><a th:href="@{/}">HOME</a></li>
+					<li class="active"><a th:href="@{/}"><span class="glyphicon glyphicon-home"/> HOME</a></li>
 					<li><a th:href="@{/about}">ABOUT</a></li>
 					<li><a th:href="@{/contact}">CONTACT</a></li>
+					<li><a href="#" onClick="$('#logoutForm').submit();return false;"><span class="glyphicon glyphicon-off"/> LOGOUT</a></li>
 				</ul>
+				<form th:action="@{/logout}" method="post" style="display: none"
+					id="logoutForm">
+					<input type="submit" value="Log out" id="logout" /> 
+				</form>
 			</div>
 			<!--/.nav-collapse -->
 		</div>

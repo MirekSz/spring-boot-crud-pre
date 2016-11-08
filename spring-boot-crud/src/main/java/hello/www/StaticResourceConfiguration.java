@@ -41,6 +41,7 @@ public class StaticResourceConfiguration extends WebMvcConfigurerAdapter {
 	@Override
 	public void addViewControllers(ViewControllerRegistry registry) {
 		registry.addRedirectViewController("/", "/auctions");
+		registry.addViewController("/login").setViewName("login");
 	}
 
 	@Override

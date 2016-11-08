@@ -37,8 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		// http.addFilterBefore(filter,
 		// UsernamePasswordAuthenticationFilter.class);
-		http.authorizeRequests().antMatchers("/assets/**").permitAll().anyRequest().authenticated().and().formLogin()
-				.and().rememberMe().and().csrf().csrfTokenRepository(csrfTokenRepository());
+		http.authorizeRequests().antMatchers("/assets/**", "/login**", "/logout**").permitAll().anyRequest()
+				.authenticated().and().formLogin().loginPage("/login").and().logout().logoutUrl("/logout").and()
+				.rememberMe().and().csrf().csrfTokenRepository(csrfTokenRepository());
 		http.headers().frameOptions().disable();
 
 		// AccessDeniedHandlerImpl deniedhandler = new
