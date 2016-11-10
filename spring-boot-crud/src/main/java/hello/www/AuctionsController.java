@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import hello.ProductService;
 import hello.repo.Auction;
 import hello.repo.AuctionRepo;
 
@@ -34,6 +35,9 @@ import hello.repo.AuctionRepo;
 public class AuctionsController {
 	@Autowired
 	AuctionRepo repo;
+
+	@Autowired
+	ProductService productService;
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
@@ -54,6 +58,7 @@ public class AuctionsController {
 		Auction findOne = repo.findOne(repo.findAll().get(0).getId());
 		model.addAttribute("auctions", repo.findAll());
 		model.addAttribute("demo", new Date());
+		productService.list();
 		return "auction/auction-list";
 	}
 
@@ -77,8 +82,8 @@ public class AuctionsController {
 			String absolutePath = file.getAbsolutePath();
 			String savePath = absolutePath + File.separator + "src" + File.separator + "main" + File.separator
 					+ "resources" + File.separator + "public" + File.separator + "phones";
-			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(), new File(savePath + File.separator
-					+ originalFilename));
+			FileUtils.copyInputStreamToFile(uploadfile.getInputStream(),
+					new File(savePath + File.separator + originalFilename));
 		}
 		handle(auction, bindingResult);
 		if (bindingResult.hasErrors()) {
